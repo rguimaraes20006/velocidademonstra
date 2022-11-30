@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "361707827736",
+    "firebase_url": "https://velocidademonstra-default-rtdb.firebaseio.com",
+    "project_id": "velocidademonstra",
+    "storage_bucket": "velocidademonstra.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361707827736:android:b207a5c6bf5669254a096d",
+        "android_client_info": {
+          "package_name": "com.velocidademonstra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361707827736-rekrjvop5urej6cg86e66sucb17qgt7m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbk-jV6R8JvVb79MeC-QuW8WtzP71pSuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361707827736-rekrjvop5urej6cg86e66sucb17qgt7m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
