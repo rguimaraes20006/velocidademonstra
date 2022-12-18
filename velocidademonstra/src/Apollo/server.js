@@ -89,4 +89,4 @@ const resolvers = {
 const server = new ApolloServer({  cors: true, typeDefs, resolvers})
 
 
-server.listen({port : 88 }).then(({ url }) => console.log(  'Iniciado' ) );
+server.listen({port : 80 }).then(({ url }) => console.log(  'Iniciado' ) );
