@@ -1,5 +1,7 @@
-import React from 'react';
-import {StyleSheet, Text, View, FlatList, Alert, Button} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Alert} from 'react-native';
+import useRadares from '../../../contexts/data-context/useRadares';
+import {Box, Text, Button, FlatList, HStack, VStack, Image} from 'native-base';
 
 const styles = StyleSheet.create({
   item: {
@@ -19,25 +21,64 @@ const DetalheRadar = (radar: any) => {
   );
 };
 
-const RadarItem = ({item}: any) => (
-  <View style={styles.item} key={item.id}>
-    <Text>Name: {item.name}</Text>
-    <Text>
-      Latitude: {item.location[1]}, Longitude: {item.location[0]}
-    </Text>
+const RadarItem = ({item}: any) => {
+  const [uri, setUri] = useState<string>(
+    'https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg',
+  );
 
-    <Button title="Ver Mais" onPress={() => DetalheRadar(item)}></Button>
-  </View>
-);
+  useEffect(() => {
+    const imageSource = async () =>
+      await fetch('https://picsum.photos/100/100').then(({url: src}: any) =>
+        setUri(src),
+      );
+    imageSource();
+  }, []);
 
-const RadarListPage = ({radares}: {radares: any}) => {
+  useEffect(() => {
+    console.debug(uri);
+  }, [uri]);
+
+  return (
+    <Box style={styles.item} key={item.id}>
+      <VStack space={3}>
+        <HStack space={2}>
+          <Box>
+            <Image
+              source={{
+                uri,
+              }}
+              alt=""
+              width={100}
+              height={100}
+            />
+          </Box>
+          <Box>
+            <Text color="#333">Name: {item.name}</Text>
+            <Text color="#333">
+              Limite de velocidade: {item.speedLimit} Km/h
+            </Text>
+            <Text color="#333">Latitude: {item.location[1]}</Text>
+            <Text color="#333">Longitude: {item.location[0]}</Text>
+          </Box>
+        </HStack>
+        <Button onPress={() => DetalheRadar(item)}>Ver Mais</Button>
+      </VStack>
+    </Box>
+  );
+};
+
+const RadarListPage = () => {
   console.log('radar list page loaded');
+  const {lista: radares} = useRadares();
   const renderItem = ({item}: any) => <RadarItem item={item} />;
 
   return (
-    <View>
-      <FlatList data={radares} renderItem={renderItem} />
-    </View>
+    <Box flex={1} width="100%" bg="gray.300">
+      <FlatList
+        data={radares.filter(({id}: any) => id < 1001)}
+        renderItem={renderItem}
+      />
+    </Box>
   );
 };
 

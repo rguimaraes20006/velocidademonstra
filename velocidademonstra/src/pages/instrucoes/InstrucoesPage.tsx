@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {Box, Text} from 'native-base';
 
 const styles = StyleSheet.create({
   item: {
@@ -7,15 +8,16 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     fontSize: 14,
+    color: '#333',
     lineHeight: 20,
   },
 });
 const InstrucoesPage = () => (
-  <View>
+  <Box flex={1} bg="gray.300">
     <Text style={styles.item}>
-    Utilize a tela de mapas para ver os radades de velocidade e evitar multas.
+      Utilize a tela de mapas para ver os radades de velocidade e evitar multas.
     </Text>
-  </View>
+  </Box>
 );
 
 export default InstrucoesPage;

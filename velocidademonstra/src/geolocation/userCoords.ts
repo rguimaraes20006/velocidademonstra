@@ -1,6 +1,6 @@
 import Geolocation, {GeoCoordinates} from 'react-native-geolocation-service';
 
-export async function userCoords() : Promise<GeoCoordinates | undefined> {
+export async function userCoords(): Promise<GeoCoordinates | undefined> {
   /*
     Geolocation.getCurrentPosition(position => {
         //deu bom

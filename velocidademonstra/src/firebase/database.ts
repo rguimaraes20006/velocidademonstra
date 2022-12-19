@@ -7,7 +7,8 @@ const snapshotToArray = (snapshot: any) => {
     if (!item) {
       return;
     }
-    returnArr.push({...item, key: item.id});
+    const [, speedLimit] = item.name.split('@');
+    returnArr.push({...item, key: item.id, speedLimit});
   });
   return returnArr;
 };

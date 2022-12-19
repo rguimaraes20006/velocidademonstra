@@ -1,41 +1,38 @@
-import React, {useContext} from 'react';
-import {StyleSheet, View, Alert} from 'react-native';
+import React from 'react';
+import {StyleSheet, Alert} from 'react-native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
-import {AppContext} from '../../app/AppContext';
+import useRadares from '../../contexts/data-context/useRadares';
+import {Box} from 'native-base';
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
     width: '100%',
     height: '100%',
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
+    width: '100%',
+    height: '100%',
   },
 });
 
-const HomePage = ({radares, initialRegion, setRegion}: any) => {
-  const value = useContext(AppContext);
-  const onRegionChange = (newRegion: any) => {
-    setRegion(newRegion);
+const HomePage = () => {
+  const {filtrados: radares, regiao, updateRadares} = useRadares();
+  const onRegionChange = async (newRegion: any) => {
+    await updateRadares({regiao: newRegion});
+  };
+  const markerClick = (nomeMapa: string) => {
+    Alert.alert('Detalhes do Radar', 'Nome: ' + nomeMapa);
   };
 
-  const markerClick = (nomeMapa : string ) => {
-    Alert.alert('Detalhes do Radar', 'Nome: '  + nomeMapa )
-  }
-
   return (
-    <View style={styles.container}>
+    <Box style={styles.container}>
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
-        initialRegion={{
-          ...initialRegion,
-        //  longitude: value.appState.userCoords.longitude,
-         // latitude: value.appState.userCoords.latitude,
-        }}
+        initialRegion={regiao}
         showsPointsOfInterest={false}
         zoomEnabled={true}
         zoomControlEnabled={true}
@@ -54,7 +51,7 @@ const HomePage = ({radares, initialRegion, setRegion}: any) => {
           />
         ))}
       </MapView>
-    </View>
+    </Box>
   );
 };
 
