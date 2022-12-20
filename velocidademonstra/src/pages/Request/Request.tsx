@@ -1,20 +1,13 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {
-  Box,
-  Button,
-  Center,
-  FormControl,
-  Heading,
-  Input,
-  Text,
-  VStack,
-} from 'native-base';
+import {Box, Button, FormControl, Input, Text, VStack} from 'native-base';
 import {useMutation} from '@apollo/client';
 import {CREATE_RADAR} from '../../utils/queries';
 import {Alert} from 'react-native';
+import useRadares from '../../contexts/data-context/useRadares';
 
 const Request = () => {
-  const [createRadar, {data, loading, error}] = useMutation(CREATE_RADAR);
+  const [createRadar] = useMutation(CREATE_RADAR);
+  const {updateRadares} = useRadares();
   const [name, setName] = useState<string>('');
   const [longitude, setLongitude] = useState<string>('');
   const [latitude, setLatitude] = useState<string>('');
@@ -42,17 +35,18 @@ const Request = () => {
       await setErrors({...e});
       return false;
     }
-    await createRadar({variables: {name, longitude, latitude}});
+    const res = await createRadar({variables: {name, longitude, latitude}});
+    const {id} = res.data.createRadar;
+    updateRadares({id, name, longitude, latitude});
     setSending(false);
     setName('');
     setLongitude('');
     setLatitude('');
     Alert.alert(
       'Solicitação de inclusão',
-      'Sua solicitação foi recebida e será analisada em breve.\n\nObrigado.',
+      'Sua solicitação foi recebida e já consta da lista provisoriamente até a análise ser concluída.\n\nObrigado.',
     );
   };
-
   const disabled = useMemo(
     () => sending || !name || !longitude || !latitude,
     [sending, name, longitude, latitude],
